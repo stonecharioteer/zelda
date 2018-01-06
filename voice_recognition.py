@@ -59,7 +59,7 @@ def say(text=None, lang="en"):
         say_fk_fortune()
     else:
         speech = Speech(text, lang)
-        sox_effects = ("speed","1.0")
+        sox_effects = ("speed","1.2")
         speech.play(sox_effects)
         print(text)
         # os.system("google_speech -l en '{}'".format(text.replace("'","")))
@@ -151,7 +151,7 @@ def main_grpc():
                         say("Seig Heil!", lang="de")
                     elif "rocket" in text.lower() or "launch" in text.lower():
                         launch_rocket()
-else:
+                    else:
                         say("You said: {}. I need to ask Google to help me with that.".format(text))
                         if audio is None:
                             say("I did not get any response from Google.")
