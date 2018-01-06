@@ -10,20 +10,59 @@ Vinay Keerthi
 """
 
 import os
+import time
 import sys
 sys.path.append("/home/vinay/AIY-voice-kit-python/src/")
 import aiy.audio
 import aiy.voicehat
 import aiy.assistant.grpc
 
-def say(text=None):
+def launch_rocket():
+    from urllib import request
+    import time
+    # 90 is base.
+    # 0 is in the air.
+    url = "http://nodemcu-02/SERVO=0"
+    say("Launch sequence initiated.")
+    for i in reversed(range(10)):
+        say("T minus {} seconds to launch.".format(str(i+1)))
+        time.sleep(1)
+    say("Take off!")
+    request.urlopen(url)
+    time.sleep(5)
+    say("Houston, the rocket is in the air!")
+    time.sleep(5)
+    say("We're bringing her down!")
+    url = "http://nodemcu-02/SERVO=90"
+    request.urlopen(url)
+
+
+
+
+def toggle_light(color, state):
+    from urllib import request
+
+    url = "http://nodemcu-01/{}?COLOR={}".format(state, color)
+    request.urlopen(url)
+
+def blink(color):
+    toggle_light(color,"ON")
+    time.sleep(1)
+    toggle_light(color, "OFF")
+
+def say(text=None, lang="en"):
     import os
+    from google_speech import Speech
     if text is None:
         say_fortune()
     elif text=="flipkart":
         say_fk_fortune()
     else:
-        os.system("google_speech -l en '{}'".format(text.replace("'","")))
+        speech = Speech(text, lang)
+        sox_effects = ("speed","1.0")
+        speech.play(sox_effects)
+        print(text)
+        # os.system("google_speech -l en '{}'".format(text.replace("'","")))
 
 def say_fk_fortune():
     import random
@@ -100,7 +139,19 @@ def main_grpc():
                         say()
                     elif "flipkart" in text.lower():
                         say("flipkart")
-                    else:
+                    elif "blink" in text.lower():
+                        colors = ["RED","GREEN","BLUE","YELLOW"]
+                        for color in colors:
+                            if color.lower() in text.lower():
+                                say("Blinking the {} light.".format(color.lower()))
+                                blink(color)
+                    elif "japanese" in text.lower():
+                        say("konichiwa! watashiwa Google desu. Yoroshiku!", lang="ja")
+                    elif "modi" in text.lower():
+                        say("Seig Heil!", lang="de")
+                    elif "rocket" in text.lower() or "launch" in text.lower():
+                        launch_rocket()
+else:
                         say("You said: {}. I need to ask Google to help me with that.".format(text))
                         if audio is None:
                             say("I did not get any response from Google.")
