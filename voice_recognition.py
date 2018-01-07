@@ -58,7 +58,7 @@ def blink(color, sleep=1):
     time.sleep(sleep)
     toggle_light(color, "OFF")
 
-def say(text=None, lang="en", robot=True):
+def say(text=None, lang="en", robot=False):
     import os
     from google_speech import Speech
     if text is None:
@@ -67,8 +67,15 @@ def say(text=None, lang="en", robot=True):
         say_fk_fortune()
     else:
         speech = Speech(text, lang)
-        sox_effects = ("speed","1.02")
-        sox_effects = ("speed 0.9 overdrive 10 echo 0.8 0.7 6 0.7 echo 0.8 0.7 10 0.7 echo 0.8 0.7 12 0.7 echo 0.8 0.88 12 0.7 echo 0.8 0.88 30 0.7 echo 0.6 0.6 60 0.7").split(" ")
+        if not robot:
+            sox_effects = ("speed","1.02")
+        else:
+            sox_effects = (
+                    "speed 0.9 overdrive 10 echo 0.8 0.7 "
+                    "6 0.7 echo 0.8 0.7 10 0.7 echo 0.8 0.7 "
+                    "12 0.7 echo 0.8 0.88 12 0.7 echo 0.8 "
+                    "0.88 30 0.7 echo 0.6 0.6 60 0.7"
+                    ).split(" ")
         speech.play(sox_effects)
         print(text)
         # os.system("google_speech -l en '{}'".format(text.replace("'","")))
@@ -160,6 +167,9 @@ def main_grpc():
                         say("Seig Heil!", lang="de")
                     elif "rocket" in text.lower() or "launch" in text.lower():
                         launch_rocket()
+                    elif "robot" in text.lower():
+                        say("A robot? I am no robot!", robot=True)
+                        say("Oops. I think I have a cold.")
                     else:
                         say("You said: {}. I need to ask Google to help me with that.".format(text))
                         if audio is None:
