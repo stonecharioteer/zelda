@@ -37,9 +37,10 @@ def launch_rocket():
         toggle_light(color, "ON")
     say("Houston, we have lift off!")
     request.urlopen(url)
-    say("One small step for man and a giant leap for robot kind!")
+    say("One small step for man and")
+    say("a giant leap for robot kind!", robot=True)
     time.sleep(2)
-    say("We're bringing her down!")
+    say("Houston, we have a problem. We need to bring her down!")
     url = "http://nodemcu-02/SERVO=90"
     request.urlopen(url)
     for color in reversed(colors):
@@ -68,7 +69,7 @@ def say(text=None, lang="en", robot=False):
     else:
         speech = Speech(text, lang)
         if not robot:
-            sox_effects = ("speed","1.02")
+            sox_effects = ("speed","1.02", "vol", "0.3")
         else:
             sox_effects = (
                     "speed 0.9 overdrive 10 echo 0.8 0.7 "
