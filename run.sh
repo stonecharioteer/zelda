@@ -8,7 +8,7 @@ source /home/vinay/AIY-voice-kit-python/env/bin/activate
 
 
 
-python voice_recognition.py
+python zelda.py
 
 exit
 
