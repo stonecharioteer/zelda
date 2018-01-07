@@ -58,7 +58,7 @@ def blink(color, sleep=1):
     time.sleep(sleep)
     toggle_light(color, "OFF")
 
-def say(text=None, lang="en"):
+def say(text=None, lang="en", robot=True):
     import os
     from google_speech import Speech
     if text is None:
@@ -68,6 +68,7 @@ def say(text=None, lang="en"):
     else:
         speech = Speech(text, lang)
         sox_effects = ("speed","1.02")
+        sox_effects = ("speed 0.9 overdrive 10 echo 0.8 0.7 6 0.7 echo 0.8 0.7 10 0.7 echo 0.8 0.7 12 0.7 echo 0.8 0.88 12 0.7 echo 0.8 0.88 30 0.7 echo 0.6 0.6 60 0.7").split(" ")
         speech.play(sox_effects)
         print(text)
         # os.system("google_speech -l en '{}'".format(text.replace("'","")))
