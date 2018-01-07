@@ -6,8 +6,9 @@
 #cat /etc/aiyprojects.info
 source /home/vinay/AIY-voice-kit-python/env/bin/activate
 
-cd -
+
 
 python voice_recognition.py
-source /home/vinay/AIY-voice-kit-python/env/bin/deactivate
+
+exit
 
