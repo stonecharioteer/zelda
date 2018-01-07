@@ -11,6 +11,7 @@ Vinay Keerthi
 
 import os
 import time
+import random
 import sys
 sys.path.append("/home/vinay/AIY-voice-kit-python/src/")
 import aiy.audio
@@ -37,8 +38,8 @@ def launch_rocket():
         toggle_light(color, "ON")
     say("Houston, we have lift off!")
     request.urlopen(url)
-    say("One small step for man and")
-    say("a giant leap for robot kind!", robot=True)
+    say("One small step for man")
+    say("and a giant leap for robot kind!", robot=True)
     time.sleep(2)
     say("Houston, we have a problem. We need to bring her down!")
     url = "http://nodemcu-02/SERVO=90"
@@ -138,6 +139,7 @@ def main_grpc():
     led.set_state(aiy.voicehat.LED.BLINK)
     time.sleep(1)
     led.set_state(aiy.voicehat.LED.OFF)
+    say("Hello! I am Zelda, your personal voice assistant.")
     say("Press the button and speak.")
     with aiy.audio.get_recorder():
         while True:
@@ -163,7 +165,7 @@ def main_grpc():
                                 say("Blinking the {} light.".format(color.lower()))
                                 blink(color)
                     elif "japanese" in text.lower():
-                        say("konichiwa! watashiwa Google desu. Yoroshiku!", lang="ja")
+                        say("konichiwa! watashiwa Zelda desu. Yoroshiku!", lang="ja")
                     elif "modi" in text.lower():
                         say("Seig Heil!", lang="de")
                     elif "rocket" in text.lower() or "launch" in text.lower():
@@ -172,7 +174,7 @@ def main_grpc():
                         say("A robot? I am no robot!", robot=True)
                         say("Oops. I think I have a cold.")
                     else:
-                        say("You said: {}. I need to ask Google to help me with that.".format(text))
+                        say("Hey Google, can you help me here?".format(text))
                         if audio is None:
                             say("I did not get any response from Google.")
                         else:
@@ -181,7 +183,12 @@ def main_grpc():
                             except:
                                 say("There was some problem trying to say what Google wants me to say.")
                 else:
-                    say("I did not catch that boss.")
+                    choices = ["polite","cocky"]
+                    if random.choice(choices) == "polite":
+                        say("A little louder, please?")
+                    else:
+                        say("Your speech emission seems to be off. I think you need some maintenance.", robot=True)
+
             except KeyboardInterrupt:
                 led.set_state(aiy.voicehat.LED.OFF)
                 say("I am done, boss!")
