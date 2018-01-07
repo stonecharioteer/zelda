@@ -1,14 +1,14 @@
-#Zelda
+# Zelda
 
 **A Google Voice Hat Experiment**
 
 ------------------
 
-Zelda is my personal voice assistant that I'm setting up to work for me around the house.
+Zelda is my personal voice assistant that I'm setting up to work for me around the house. She is named after Zelda Fitzgerald.
 
 
 ## Hardware:
----------------------
+
 
 Zelda runs off a Raspberry Pi with a Voice hat. It uses the assistant API to convert speech to text, and the google Speech API to convert
 text to speech, but the keyword recognition and actions are coded using pure python.
@@ -19,7 +19,6 @@ Check the ``andon`` project for more details about how I've adapted the Google P
 
 
 ## Software:
----------------------
 
 Zelda is written in Python and relies on the Google aiy module for STT. I chose the ``google_speech`` python module for TTS, 
 because being able to play around with the language settings, the accent and the access to libSOX is amazing.
@@ -27,7 +26,6 @@ because being able to play around with the language settings, the accent and the
 I personally like that module better than ``aiy.voice.say``, because it doesnt' sound **as** robotic.
 
 ## TODO:
---------------------
 
     [*] Scan Wifi constantly to see if I've connected so it can greet me.
     [*] Build a corpus of poems from Gutenburg so it can wake me up with a morning poem.
@@ -39,6 +37,6 @@ I personally like that module better than ``aiy.voice.say``, because it doesnt' 
     [!] Use ``nltk`` to build a decent conversation bot.
     [*] Allow entry and query to Goodreads or to a private repository of my Books.
 
-    
+-------------------------    
 
 
