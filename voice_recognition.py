@@ -24,30 +24,38 @@ def launch_rocket():
     # 0 is in the air.
     url = "http://nodemcu-02/SERVO=0"
     say("Launch sequence initiated.")
+    colors = ["blue","yellow","red","green"]
     for i in reversed(range(10)):
-        say("T minus {} seconds to launch.".format(str(i+1)))
-        time.sleep(1)
-    say("Take off!")
+        for color in colors:
+            blink(color, 0.05)
+        if i+1 <= 5:
+            say(str(i+1))
+        else:
+            say("T minus {} seconds to launch.".format(str(i+1)))
+        time.sleep(0.3)
+    for color in colors:
+        toggle_light(color, "ON")
+    say("Houston, we have lift off!")
     request.urlopen(url)
-    time.sleep(5)
-    say("Houston, the rocket is in the air!")
-    time.sleep(5)
+    say("One small step for man and a giant leap for robot kind!")
+    time.sleep(2)
     say("We're bringing her down!")
     url = "http://nodemcu-02/SERVO=90"
     request.urlopen(url)
-
-
+    for color in reversed(colors):
+        toggle_light(color, "OFF")
 
 
 def toggle_light(color, state):
     from urllib import request
 
-    url = "http://nodemcu-01/{}?COLOR={}".format(state, color)
+    url = "http://nodemcu-01/{}?COLOR={}".format(state.upper(), 
+            color.upper())
     request.urlopen(url)
 
-def blink(color):
+def blink(color, sleep=1):
     toggle_light(color,"ON")
-    time.sleep(1)
+    time.sleep(sleep)
     toggle_light(color, "OFF")
 
 def say(text=None, lang="en"):
@@ -59,7 +67,7 @@ def say(text=None, lang="en"):
         say_fk_fortune()
     else:
         speech = Speech(text, lang)
-        sox_effects = ("speed","1.2")
+        sox_effects = ("speed","1.02")
         speech.play(sox_effects)
         print(text)
         # os.system("google_speech -l en '{}'".format(text.replace("'","")))
