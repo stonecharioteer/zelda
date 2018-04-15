@@ -1,7 +1,7 @@
-aiy
 flask
 google_speech
 matplotlib
 pillow
+pycups
 reportlab
 requests
