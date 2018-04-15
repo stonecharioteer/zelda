@@ -6,9 +6,7 @@
 #cat /etc/aiyprojects.info
 source /home/vinay/AIY-voice-kit-python/env/bin/activate
 
-
-
-python zelda.py
+python run.py
 
 exit
 

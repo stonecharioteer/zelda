@@ -1,0 +1,1 @@
+from .zelda import main_grpc as run
