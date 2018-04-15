@@ -1,0 +1,7 @@
+aiy
+flask
+google_speech
+matplotlib
+pillow
+reportlab
+requests
